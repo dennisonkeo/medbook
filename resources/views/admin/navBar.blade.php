@@ -19,9 +19,9 @@
           <ul class="nav navbar-nav align-items-center">
       
             <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="{{ asset('admin/assets/images/user2.png') }}" class="user-picture" alt="Avatar"> <span>Admin</span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="{{ asset('admin/assets/images/user2.png') }}" class="user-picture" alt="Avatar"> <span>{{ Auth::user()->name }}</span></a>
               <ul class="dropdown-menu dropdown-menu-right logged-user-menu">
-                <li><a href="page-lockscreen.html"><i class="ti-power-off"></i> <span>Logout</span></a></li>
+                <li><a href="{{ route('logout') }}"><i class="ti-power-off"></i> <span>Logout</span></a></li>
               </ul>
             </li>
           </ul>

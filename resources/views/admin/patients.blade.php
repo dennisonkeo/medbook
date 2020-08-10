@@ -14,6 +14,9 @@
   <link href="admin/assets/plugins/datatables.net-buttons-bs4/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
   <link href="admin/assets/plugins/datatables.net-colreorder-bs4/colreorder.bootstrap4.min.html" rel="stylesheet" type="text/css" />
 
+  <!-- Datepicker css -->
+  <link href="admin/assets/plugins/bootstrap-datepicker/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+
   <!-- App css -->
   <link href="admin/assets/css/bootstrap-custom.min.css" rel="stylesheet" type="text/css" />
   <link href="admin/assets/css/app.min.css" rel="stylesheet" type="text/css" />
@@ -150,7 +153,7 @@
       <br>
 
       <label>Date Of Birth</label>                       
-      <input type="text" class="form-control input-lg" placeholder="" name="dob" required="" autofocus>
+      <input data-provide="datepicker" data-date-autoclose="true" name="dob" class="form-control" data-date-format="yyyy-mm-dd">
       <small>e.g 2000-04-01</small>
       <br>
 
@@ -247,6 +250,9 @@
   <!-- Datables Core -->
   <script src="admin/assets/plugins/datatables.net/jquery.dataTables.min.js"></script>
   <script src="admin/assets/plugins/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Datepicker Plugin -->
+  <script src="admin/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
 
   <!-- Datables Extension -->
   <script src="admin/assets/plugins/datatables.net-buttons/js/dataTables.buttons.min.js"></script>

@@ -24,19 +24,26 @@
         <div class="content">
           <div class="header">
             <div class="logo text-center">
-              {{-- <img src="admin/assets/images/logo-dark.png" alt="Klorofil Logo"> --}}
+              @include('admin.errors')
+              @if (session('warning'))
+                          <div class="alert alert-danger">
+                          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                              {{ session('warning') }}
+                          </div>
+                         @endif 
               <h1>MedBook</h1>
             </div>
             <p class="lead">Login to your account</p>
           </div>
-          <form class="form-auth-small" action="#">
+          <form class="form-auth-small" method="post" action="login">
+            {{ csrf_field() }}
             <div class="form-group">
               <label for="signin-email" class="control-label sr-only">Email</label>
-              <input type="email" class="form-control" id="signin-email" placeholder="Email">
+              <input type="email" class="form-control" id="signin-email" name="email" placeholder="Email">
             </div>
             <div class="form-group">
               <label for="signin-password" class="control-label sr-only">Password</label>
-              <input type="password" class="form-control" id="signin-password" placeholder="Password">
+              <input type="password" class="form-control" id="signin-password" name="password" placeholder="Password">
             </div>
             <div class="form-group">
               <label class="fancy-checkbox element-left custom-bgcolor-blue">

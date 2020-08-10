@@ -13,9 +13,14 @@
 
 
 
-// Route::get('/', function () {
-//     return view('admin.login');
-// });
+Route::get('login', function () {
+    return view('admin.login');
+});
+
+Route::post('login', 'AdminController@login')->name('login');
+Route::get('logout', 'AdminController@logout')->name('logout');
+
+Route::group(['middleware' => ['auth']], function () {
 
 Route::get('/', 'AdminController@index')->name('dashboard');
 Route::get('patients', 'PatientController@index')->name('patients');
@@ -27,3 +32,5 @@ Route::post('add-service', 'ServiceController@addService')->name('add-service');
 Route::delete('delete-patient/{patient}', 'PatientController@deletePatient')->name('delete-patient');
 Route::get('get-patient', 'PatientController@getPatient')->name('get-patient');
 Route::post('update-patient', 'PatientController@updatePatient')->name('update-patient');
+
+});
