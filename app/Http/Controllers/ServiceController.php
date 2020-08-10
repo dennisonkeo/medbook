@@ -17,9 +17,15 @@ class ServiceController extends Controller
 
     public function addService(Request $request)
     {
+    	$this->validate($request,[
+
+            'name'=>'required|string|unique:services',
+
+            ]);
+
     	$service = new Service;
 
-    	$service->name = $request->service;
+    	$service->name = $request->name;
 
 
     	$service->save();

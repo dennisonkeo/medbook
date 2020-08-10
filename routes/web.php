@@ -12,21 +12,18 @@
 */
 
 
-Route::get('patient', function () {
-    return view('admin.patients');
-});
 
-Route::get('/', function () {
-    return view('admin.login');
-});
+// Route::get('/', function () {
+//     return view('admin.login');
+// });
 
-Route::get('dashboard', function () {
-    return view('admin.dashboard3');
-});
-
+Route::get('/', 'AdminController@index')->name('dashboard');
 Route::get('patients', 'PatientController@index')->name('patients');
 Route::post('add-patient', 'PatientController@addPatient')->name('add-patient');
 Route::get('gender', 'GenderController@index')->name('gender');
 Route::post('add-gender', 'GenderController@addGender')->name('add-gender');
 Route::get('service', 'ServiceController@index')->name('service');
 Route::post('add-service', 'ServiceController@addService')->name('add-service');
+Route::delete('delete-patient/{patient}', 'PatientController@deletePatient')->name('delete-patient');
+Route::get('get-patient', 'PatientController@getPatient')->name('get-patient');
+Route::post('update-patient', 'PatientController@updatePatient')->name('update-patient');

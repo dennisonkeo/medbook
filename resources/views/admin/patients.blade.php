@@ -20,6 +20,7 @@
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
   <!-- Favicon -->
   <link rel="shortcut icon" href="admin/assets/images/favicon.png">
@@ -77,6 +78,7 @@
                       <th>Gender</th>
                       <th>Type Of Service</th>
                       <th>General comments</th>
+                      <th>ACTION</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -84,9 +86,13 @@
                     <tr>
                       <td>{{ $patient->name }}</td>
                       <td>{{ $patient->dob }}</td>
-                      <td>{{ $patient->gender }}</td>
-                      <td>{{ $patient->service }}</td>
+                      <td>{{ $patient->gender->name }}</td>
+                      <td>{{ $patient->service->name }}</td>
                       <td>{{ $patient->comment }}</td>
+                      <td>
+                        <button class="btn btn-primary" onclick="edit_patient({{ $patient->id }})" href="javascript:void(0);" id="edit">Edit </button>
+                        <button class="btn btn-danger" onclick="deletePatient({{ $patient->id }})" id="delete">Delete </i></button>
+                      </td>
                     </tr>
                     @endforeach
                     
@@ -136,7 +142,7 @@
       <label>Gender</label>                       
       <select class="form-control" name="gender">
                           @foreach($genders as $gender)
-                      <option value="{{ $gender->name }}">{{ $gender->name }}</option>
+                      <option value="{{ $gender->id }}">{{ $gender->name }}</option>
 
                 @endforeach
 
@@ -151,7 +157,7 @@
       <label>Type Of Service</label>                       
       <select class="form-control" name="service">
         @foreach($services as $service)
-                      <option value="{{ $service->name }}">{{ $service->name }}</option>
+                      <option value="{{ $service->id }}">{{ $service->name }}</option>
 
                 @endforeach
 
@@ -167,6 +173,65 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="submit"   class="btn btn-primary">Save changes</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+      <!-- Modal -->
+<div class="modal fade" id="upadateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Patient</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="panel-body">
+      <form method="POST" action="add-patient" id="form">
+      {{ csrf_field() }}
+      <label>Patient Name</label>                       
+      <input type="text" class="form-control input-lg" id="name" placeholder="" name="name" required="" autofocus>
+      <br>
+      <input type="hidden" name="id">
+
+      <label>Gender</label>                       
+      <select class="form-control" name="gender">
+                          @foreach($genders as $gender)
+                      <option value="{{ $gender->id }}">{{ $gender->name }}</option>
+
+                @endforeach
+
+                        </select>
+      <br>
+
+      <label>Date Of Birth</label>                       
+      <input type="text" class="form-control input-lg" placeholder="" name="dob" required="" autofocus>
+      <small>e.g 2000-04-01</small>
+      <br>
+
+      <label>Type Of Service</label>                       
+      <select class="form-control" name="service">
+        @foreach($services as $service)
+                      <option value="{{ $service->id }}">{{ $service->name }}</option>
+
+                @endforeach
+
+                        </select>
+      <br>
+
+      <label>General Comments</label>                       
+      <textarea type="text" class="form-control input-lg"  placeholder="" name="comment" required="" autofocus></textarea>
+      <br>
+      
+    </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" onclick="save()"  class="btn btn-primary">Save changes</button>
       </div>
       </form>
     </div>
@@ -220,7 +285,7 @@
                   }).then((result) => {
                     if (result.value) {
                          $.ajax({
-                              url : "{{ route('add-patient') }}",
+                              url : "{{ route('update-patient') }}",
                               type: "POST",
                               data: $('#form').serialize(),
                               _token: '{{csrf_token()}}',
@@ -251,6 +316,86 @@
                     }
                   });
  }
+
+  function deletePatient(id)
+    {
+
+       Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes!',
+                    showLoaderOnConfirm: true,
+                  }).then((result) => {
+                    if (result.value) {
+                         $.ajax({
+                              url : "{{ url('delete-patient') }}/"+id,
+                              type: "DELETE",
+                              data: {_token: '{{csrf_token()}}'},
+                              dataType: "JSON",
+                              success: function(data)
+                              {               
+                                Swal.fire({
+                                  title: 'Deleted!',
+                                  text: "Record has been deleted successfully!",
+                                  icon: 'success',
+                                  closeButtonText: 'No, cancel!',
+                                }
+                                ).then((result)=>{
+                                  location.reload();
+                                }
+                                );
+                            },
+                            error: function (jqXHR, textStatus, errorThrown)
+                            {
+                                // alert('Error deleting data');
+                                Swal.fire({
+                                           title: 'Oops...',
+                                            text: 'Error deleting record!',
+                                            icon: 'error',
+                                          })
+                            }
+                        });                     
+                    }
+                  });
+    }
+
+      function edit_patient(id)
+    {
+      save_method = 'update';
+      $('#upadateModal').modal({
+                    backdrop: 'static'
+    });
+      $('#form')[0].reset(); // reset form on modals
+ 
+      //Ajax Load data from ajax
+      $.ajax({
+        url : '{{ route('get-patient') }}',
+        type: "GET",
+        data: {id: id},
+        dataType: "JSON",
+        success: function(data)
+        {
+             $('[name="name"]').val(data.name);
+             $('[name="dob"]').val(data.dob);
+             $('[name="comment"]').val(data.comment);
+            $('[name="id"]').val(data.id);
+
+
+            $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
+            $('.modal-title').text('Edit Scale'); // Set title to Bootstrap modal title
+ 
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+    });
+    }
+
   </script>
 </body>
 

@@ -19,9 +19,9 @@
             <a href="#subLayouts" data-toggle="collapse" data-parent="#sidebar-nav-menu" aria-expanded="" class=""><i class="fa fa-user"></i> <span class="title">Patients</span> <i class="icon-submenu ti-angle-left"></i></a>
             <div id="subLayouts"  class="collapse  ">
               <ul class="submenu">
-                <li><a href="#" class="">Add Patient</a></li>
-                <li><a href="#" class="">Add Gender</a></li>
-                <li><a href="#" class="">Add Service</a></li>
+                <li><a href="{{ route('patients') }}" class="">Add Patient</a></li>
+                <li><a href="{{ route('gender') }}" class="">Add Gender</a></li>
+                <li><a href="{{ route('service') }}" class="">Add Service</a></li>
 
               </ul>
             </div>

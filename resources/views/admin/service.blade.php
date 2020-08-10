@@ -63,6 +63,7 @@
 
           <!-- DATATABLE EXPORT -->
           <div class="card">
+            @include('admin.errors')
             <div class="card-header">
               {{-- <h3 class="card-title">Manage Patients</h3> --}}
                <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i> Add Service</button>
@@ -124,7 +125,7 @@
 
 
       <label>Service Name</label>                       
-      <input type="text" class="form-control input-lg" placeholder="" name="service" required="" autofocus>
+      <input type="text" class="form-control input-lg" placeholder="" name="name" required="" autofocus>
       {{-- <small>e.g 2000-04-01</small> --}}
       <br>
 

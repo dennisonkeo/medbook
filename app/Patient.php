@@ -10,11 +10,11 @@ class Patient extends Model
      
     public function gender()
    {
-      return $this->hasOne(Gender::class);
+      return $this->belongsTo(Gender::class);
    }
 
     public function service()
    {
-      return $this->hasOne(Service::class);
+      return $this->belongsTo(Service::class);
    }
 }

@@ -32,4 +32,26 @@ class PatientController extends Controller
     	return back();
 
     }
+
+    public function getPatient(Request $request)
+    {
+        $data = Patient::where('id', $request->post('id'))->first();
+
+        return response()->json($data);
+    }
+
+    public function updatePatient(Request $request)
+    {
+        Patient::where('id', $request->post('id'))
+                  ->update(array('name' => $request->post('name'),'dob' => $request->post('dob'),'service_id' => $request->post('service'),'gender_id' => $request->post('gender'), 'comment' => $request->post('comment')));
+
+        return response()->json('success');
+    }
+
+    public function deletePatient(Patient $patient)
+    {
+        $patient->delete();
+
+        return response()->json('success');
+    }
 }

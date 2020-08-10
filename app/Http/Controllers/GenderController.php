@@ -17,6 +17,12 @@ class GenderController extends Controller
 
     public function addGender(Request $request)
     {
+    	$this->validate($request,[
+
+            'name'=>'required|string|unique:genders',
+
+            ]);
+
     	$gender = new Gender;
 
     	$gender->name = $request->gender;
@@ -27,4 +33,6 @@ class GenderController extends Controller
     	return back();
 
     }
+
+
 }

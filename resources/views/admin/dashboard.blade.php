@@ -78,7 +78,7 @@
                       <div class="widget-metric_6 animate">
                         <span class="icon-wrapper custom-bg-yellow"><i class="fa fa-user"></i></span>
                         <div class="right">
-                          <span class="value">1252</span>
+                          <span class="value">{{ count($total_patients) }}</span>
                           <span class="title">Patients</span>
                         </div>
                       </div>
@@ -87,14 +87,14 @@
                       <div class="widget-metric_6 animate">
                         <span class="icon-wrapper custom-bg-orange"><i class="fas fa-list"></i></span>
                         <div class="right">
-                          <span class="value">203</span>
+                          <span class="value">{{ count($services) }}</span>
                           <span class="title">Services</span>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="card">
-            <h3 class="card-header">Today's Patients</h3>
+            <h3 class="card-header">Recent Patients</h3>
             <div class="card-body">
               <div class="table-responsive">
                 <table id="datatable-export" class="table table-striped">
@@ -108,13 +108,15 @@
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach($patients as $patient)
                     <tr>
-                      <td>Chrome</td>
-                      <td>Macintosh</td>
-                      <td>360</td>
-                      <td>82.78%</td>
-                      <td>87.77%</td>
+                      <td>{{ $patient->name }}</td>
+                      <td>{{ $patient->dob }}</td>
+                      <td>{{ $patient->gender->name }}</td>
+                      <td>{{ $patient->service->name }}</td>
+                      <td>{{ $patient->comment }}</td>
                     </tr>
+                    @endforeach
 
                   </tbody>
                 </table>
